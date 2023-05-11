@@ -35,7 +35,7 @@ const Home: NextPage = () => {
   const [input, setInput] = useState("");
   const [result, setResult] = useState<string | undefined>(undefined);
   const [receiving, setReceiving] = useState(false);
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<Array<{sender: string, text: string}>>([]);
 
   const downloadTxtFile = () => {
     const file = new Blob([messages.join('\n')], { type: 'text/plain' });
@@ -48,9 +48,10 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (result) {
-      setMessages((prev) => [...prev, result]);
+      setMessages((prev) => [...prev, {sender: 'assistant', text: result}]);
     }
   }, [result]);
+
   const start = useCallback(async () => {
     setResult("");
     setReceiving(true);
@@ -81,8 +82,9 @@ const Home: NextPage = () => {
 
   const handleButtonClick = () => {
     start();
-    setMessages((prev) => [...prev, input]);
+    setMessages((prev) => [...prev, {sender: 'user', text: input}]);
   };
+
 
   return (
     <div className="relative flex min-h-screen overflow-hidden isolate flex-col items-center justify-start py-2 bg-gray-100 text-black dark:bg-neutral-900 dark:text-gray-100">
@@ -115,17 +117,19 @@ const Home: NextPage = () => {
         </h1>
 
         <p className="mt-3 max-w-lg opacity-70">{client.appSummary}</p>
-
-        <Card className="p-0 overflow-hidden mt-10 w-full h-36 max-w-lg bg-blue-100/20">
-          <textarea
-            className="bg-transparent w-full h-full outline-none p-4 resize-none"
-            placeholder={client.exampleInput}
-            autoFocus
-            value={input}
-            onChange={handleInputChange}
-          />
-        </Card>
-
+{messages.length > 0 &&
+  messages.map((message, index) => (
+    <Card
+      key={index}
+      className="overflow-hidden break-words text-start w-full max-w-lg bg-blue-100/20"
+      style={{
+        minHeight: "9rem",
+      }}
+    >
+      <pre className="p-4 whitespace-pre-wrap">{message.text}</pre>
+    </Card>
+  ))}
+        
         <button
           className={classNames(
             spaceGrotesk.className,
