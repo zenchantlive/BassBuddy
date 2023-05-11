@@ -98,7 +98,7 @@
 </head>
 <body>
     <form id="myForm">
-        <input type="text" id="textInput" placeholder="Ask Any Ableton Question!" required>
+         <input type="text" id="textInput" placeholder="Ask Any Ableton Question!" required>
         <input type="submit" value="Submit">
         <div id="result">
             <button id="copyButton">Copy</button>
@@ -106,7 +106,15 @@
         </div>
         <a href="https://www.buymeacoffee.com/zenchant" id="buyButton" target="_blank">Buy me a 🥑?</a>
     </form>
-    
+
+    <style>
+        #result {
+            width: 80%; /* adjust this percentage as needed */
+            margin: 0 auto; /* centers the box horizontally */
+            overflow-y: auto; /* enables vertical scrolling */
+        }
+    </style>
+
     <script>
         document.getElementById('myForm').addEventListener('submit', async (e) => {
             e.preventDefault();
