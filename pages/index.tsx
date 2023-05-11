@@ -118,9 +118,10 @@ const Home: NextPage = () => {
 
         <p className="mt-3 max-w-lg opacity-70">{client.appSummary}</p>
         {messages.length > 0 &&
-        {messages.map((message, index) => (
-  <MessageBubble key={index} message={message} isUser={index % 2 === 0} />
-))}
+          messages.map((message, index) => (
+            <MessageBubble key={index} message={message} isUser={index % 2 === 0} />
+  ))
+}
           
         <button
           className={classNames(
@@ -143,10 +144,7 @@ const Home: NextPage = () => {
             <pre className="p-4 whitespace-pre-wrap">{result}</pre>
           </Card>
         ) : undefined}
-        {messages.map((message, index) => (
-          <MessageBubble key={index} message={message} isUser={message.sender === 'user'} />
-        ))}
-
+      
         <button
           className={classNames(
             spaceGrotesk.className,
