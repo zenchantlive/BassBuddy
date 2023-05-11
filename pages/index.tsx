@@ -16,7 +16,6 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 // Create MessageBubble Component
-// Update MessageBubble to expect an object instead of a string for the message
 const MessageBubble: React.FC<{message: {sender: string, text: string}, isUser: boolean}> = ({message, isUser}) => {
   return (
     <div style={{
@@ -27,16 +26,10 @@ const MessageBubble: React.FC<{message: {sender: string, text: string}, isUser: 
       padding: "10px",
       alignSelf: isUser ? "flex-end" : "flex-start"
     }}>
-      <p>{message.text}</p>  {/* use message.text instead of just message */}
+      <p>{message.text}</p>  
     </div>
   )
 }
-
-// When you use MessageBubble, you don't need to change the logic for isUser, just pass the whole message object
-{messages.map((message, index) => (
-  <MessageBubble key={index} message={message} isUser={message.sender === 'user'} />
-))}
-
 // Home Component
 const Home: NextPage = () => {
   const [input, setInput] = useState("");
@@ -45,12 +38,12 @@ const Home: NextPage = () => {
   const [messages, setMessages] = useState<Array<{sender: string, text: string}>>([]);
 
   const downloadTxtFile = () => {
-    const file = new Blob([messages.join('\n')], { type: 'text/plain' });
+    const file = new Blob([messages.map(message => message.text).join('\n')], { type: 'text/plain' });
     download(file, 'results.txt', 'text/plain');
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(messages.join('\n'));
+    navigator.clipboard.writeText(messages.map(message => message.text).join('\n'));
   };
 
   useEffect(() => {
@@ -92,7 +85,6 @@ const Home: NextPage = () => {
     setMessages((prev) => [...prev, {sender: 'user', text: input}]);
   };
 
-
   return (
     <div className="relative flex min-h-screen overflow-hidden isolate flex-col items-center justify-start py-2 bg-gray-100 text-black dark:bg-neutral-900 dark:text-gray-100">
       <Head>
@@ -100,7 +92,7 @@ const Home: NextPage = () => {
         <link rel="icon" href={client.appLogo} />
       </Head>
       <BackgroundGradient className="top-0 left-0 h-96 w-48 bg-indigo-500/30 duration-500 dark:bg-blue-500/40" />
-      <BackgroundGradient className="left-60 top-96 h-64 w-72 rounded-lg bg-blue-500/30  duration-700 dark:bg-indigo-500/40" />
+      <BackgroundGradient className="left-60 top-96 h-64
       <BackgroundGradient className="right-96 bottom-60 h-60 w-60 rounded-lg bg-red-500/30 dark:bg-violet-500/30" />
       <BackgroundGradient className="right-0 bottom-0 h-48 w-96 rounded-full bg-orange-500/30 dark:bg-cyan-500/30" />
 
@@ -117,26 +109,27 @@ const Home: NextPage = () => {
           <span
             className="text-blue-600"
             style={{
-              color: client.appThemeColor            }}
+              color: client.appThemeColor
+            }}
           >
             {client.appName}
           </span>
         </h1>
 
         <p className="mt-3 max-w-lg opacity-70">{client.appSummary}</p>
-{messages.length > 0 &&
-  messages.map((message, index) => (
-    <Card
-      key={index}
-      className="overflow-hidden break-words text-start w-full max-w-lg bg-blue-100/20"
-      style={{
-        minHeight: "9rem",
-      }}
-    >
-      <pre className="p-4 whitespace-pre-wrap">{message.text}</pre>
-    </Card>
-  ))}
-        
+        {messages.length > 0 &&
+          messages.map((message, index) => (
+            <Card
+              key={index}
+              className="overflow-hidden break-words text-start w-full max-w-lg bg-blue-100/20"
+              style={{
+                minHeight: "9rem",
+              }}
+            >
+              <pre className="p-4 whitespace-pre-wrap">{message.text}</pre>
+            </Card>
+          ))}
+          
         <button
           className={classNames(
             spaceGrotesk.className,
@@ -158,9 +151,8 @@ const Home: NextPage = () => {
             <pre className="p-4 whitespace-pre-wrap">{result}</pre>
           </Card>
         ) : undefined}
-
         {messages.map((message, index) => (
-          <MessageBubble key={index} message={message} isUser={index % 2 === 0} />
+          <MessageBubble key={index} message={message} isUser={message.sender === 'user'} />
         ))}
 
         <button
@@ -176,7 +168,6 @@ const Home: NextPage = () => {
 
         <button onClick={downloadTxtFile}>Download Results</button>
         <button onClick={copyToClipboard}>Copy Results</button>
-
       </main>
 
       <footer className="flex h-24 w-full items-center justify-center">
