@@ -16,7 +16,8 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 // Create MessageBubble Component
-const MessageBubble: React.FC<{message: string, isUser: boolean}> = ({message, isUser}) => {
+// Update MessageBubble to expect an object instead of a string for the message
+const MessageBubble: React.FC<{message: {sender: string, text: string}, isUser: boolean}> = ({message, isUser}) => {
   return (
     <div style={{
       maxWidth: "80%",
@@ -26,10 +27,16 @@ const MessageBubble: React.FC<{message: string, isUser: boolean}> = ({message, i
       padding: "10px",
       alignSelf: isUser ? "flex-end" : "flex-start"
     }}>
-      <p>{message}</p>
+      <p>{message.text}</p>  {/* use message.text instead of just message */}
     </div>
   )
 }
+
+// When you use MessageBubble, you don't need to change the logic for isUser, just pass the whole message object
+{messages.map((message, index) => (
+  <MessageBubble key={index} message={message} isUser={message.sender === 'user'} />
+))}
+
 // Home Component
 const Home: NextPage = () => {
   const [input, setInput] = useState("");
