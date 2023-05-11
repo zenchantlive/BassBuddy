@@ -51,6 +51,12 @@
         input[type="submit"]:hover {
             background: linear-gradient(to right, #4c0ca8, #1c5ddd);
         }
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
         #result {
             width: 80%;
             margin: 0 auto;
@@ -146,11 +152,13 @@
     <form id="myForm">
         <input type="text" id="textInput" placeholder="Ask Any Ableton Question!" required>
         <input type="submit" value="Submit">
+    <div class="result-container">
         <div id="result">
             <button id="copyButton">Copy</button>
             <pre id="output"></pre>
         </div>
         <a href="https://www.buymeacoffee.com/zenchant" id="buyButton" target="_blank">Buy me a 🥑?</a>
+    </div>
     </form>
 
     <script>
