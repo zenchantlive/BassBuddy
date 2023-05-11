@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        form {
+            width: 60vh;
+            height: 60vh;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #6a11cb;
+            outline: none;
+        }
+        input[type="submit"] {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 2rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s;
+        }
+        input[type="submit"]:hover {
+            background: linear-gradient(to right, #4c0ca8, #1c5ddd);
+        }
+        #result {
+            width: 80%; 
+            margin: 0 auto;
+            overflow-y: auto;
+            position: relative;
+            max-height: 300px;
+        }
+        #copyButton {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s;
+        }
+        #copyButton:hover {
+            background: linear-gradient(to right, #4c0ca8, #1c5ddd);
+        }
+        #buyButton {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0,            0.1);
+            transition: background 0.3s;
+            margin-top: 1rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+        #buyButton:hover {
+            background: linear-gradient(to right, #4c0ca8, #1c5ddd);
+        }
+        #output {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            max-height: 150px;
+            overflow-y: auto;
+            font-size: 1.2rem;
+        }
+        pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <form id="myForm">
+        <input type="text" id="textInput" placeholder="Ask Any Ableton Question!" required>
+        <input type="submit" value="Submit">
+        <div id="result">
+            <button id="copyButton">Copy</button>
+            <pre id="output"></pre>
+        </div>
+        <a href="https://www.buymeacoffee.com/zenchant" id="buyButton" target="_blank">Buy me a 🥑?</a>
+    </form>
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const textInput = document.getElementById('textInput').value;
+            const response = await fetch('/api/request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ input: textInput })
+            });
+            const data = await response.text();
+            document.getElementById('output').innerText = data;
+
+            const resultBox = document.getElementById('result');
+            resultBox.style.height = 'auto';
+            const maxHeight = window.innerHeight * 0.6;
+            if (resultBox.offsetHeight > maxHeight) {
+                resultBox.style.height = maxHeight + 'px';
+            }
+        });
+
+        document.getElementById('copyButton').addEventListener('click', () => {
+            const output = document.getElementById('output');
+            const range = document.createRange();
+            range.selectNode(output);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            alert('Output copied to clipboard');
+        });
+    </script>
+</body>
+</html>
