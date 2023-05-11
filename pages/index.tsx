@@ -7,7 +7,7 @@ import BackgroundGradient from "../components/background-gradient";
 import Card from "../components/card";
 import { MouseEvent, useCallback, useRef, useState, useEffect } from "react";
 import client from "../config-client";
-import download from 'downloadjs';
+const download = require('downloadjs');
 
 // Define custom font
 const spaceGrotesk = Space_Grotesk({
