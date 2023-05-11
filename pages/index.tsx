@@ -7,7 +7,7 @@ import BackgroundGradient from "../components/background-gradient";
 import Card from "../components/card";
 import { MouseEvent, useCallback, useRef, useState, useEffect } from "react";
 import client from "../config-client";
-import { saveAs } from 'file-saver';
+import download from 'downloadjs';
 
 // Define custom font
 const spaceGrotesk = Space_Grotesk({
@@ -39,7 +39,7 @@ const Home: NextPage = () => {
 
   const downloadTxtFile = () => {
     const file = new Blob([messages.join('\n')], { type: 'text/plain' });
-    saveAs(file, 'results.txt');
+    download(file, 'results.txt', 'text/plain');
   };
 
   const copyToClipboard = () => {
