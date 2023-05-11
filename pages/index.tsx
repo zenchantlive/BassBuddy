@@ -118,17 +118,9 @@ const Home: NextPage = () => {
 
         <p className="mt-3 max-w-lg opacity-70">{client.appSummary}</p>
         {messages.length > 0 &&
-          messages.map((message, index) => (
-            <Card
-              key={index}
-              className="overflow-hidden break-words text-start w-full max-w-lg bg-blue-100/20"
-              style={{
-                minHeight: "9rem",
-              }}
-            >
-              <pre className="p-4 whitespace-pre-wrap">{message.text}</pre>
-            </Card>
-          ))}
+        {messages.map((message, index) => (
+  <MessageBubble key={index} message={message} isUser={index % 2 === 0} />
+))}
           
         <button
           className={classNames(
