@@ -5,18 +5,53 @@ import { Preahvihear, Space_Grotesk } from "next/font/google";
 import classNames from "classnames";
 import BackgroundGradient from "../components/background-gradient";
 import Card from "../components/card";
-import { MouseEvent, useCallback, useRef, useState } from "react";
+import { MouseEvent, useCallback, useRef, useState, useEffect } from "react";
 import client from "../config-client";
+import { saveAs } from 'file-saver';
 
+// Define custom font
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
 });
 
+// Create MessageBubble Component
+const MessageBubble: React.FC<{message: string, isUser: boolean}> = ({message, isUser}) => {
+  return (
+    <div style={{
+      maxWidth: "80%",
+      backgroundColor: isUser ? "lightgreen" : "lightblue",
+      borderRadius: "20px",
+      margin: "10px",
+      padding: "10px",
+      alignSelf: isUser ? "flex-end" : "flex-start"
+    }}>
+      <p>{message}</p>
+    </div>
+  )
+}
+
+// Home Component
 const Home: NextPage = () => {
   const [input, setInput] = useState("");
   const [result, setResult] = useState<string | undefined>(undefined);
   const [receiving, setReceiving] = useState(false);
+  const [messages, setMessages] = useState<string[]>([]);
+
+  const downloadTxtFile = () => {
+    const file = new Blob([messages.join('\n')], { type: 'text/plain' });
+    saveAs(file, 'results.txt');
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(messages.join('\n'));
+  };
+
+  useEffect(() => {
+    if (result) {
+      setMessages((prev) => [...prev, result]);
+    }
+  }, [result]);
 
   const start = useCallback(async () => {
     setResult("");
@@ -57,13 +92,13 @@ const Home: NextPage = () => {
 
     setReceiving(false);
   }, [input]);
-
   return (
     <div className="relative flex min-h-screen overflow-hidden isolate flex-col items-center justify-start py-2 bg-gray-100 text-black dark:bg-neutral-900 dark:text-gray-100">
       <Head>
         <title>{client.appName}</title>
         <link rel="icon" href={client.appLogo} />
       </Head>
+
       <BackgroundGradient className="top-0 left-0 h-96 w-48 bg-indigo-500/30 duration-500 dark:bg-blue-500/40" />
       <BackgroundGradient className="left-60 top-96 h-64 w-72 rounded-lg bg-blue-500/30  duration-700 dark:bg-indigo-500/40" />
       <BackgroundGradient className="right-96 bottom-60 h-60 w-60 rounded-lg bg-red-500/30 dark:bg-violet-500/30" />
@@ -101,8 +136,7 @@ const Home: NextPage = () => {
             }}
           />
         </Card>
-
-        <button
+                <button
           className={classNames(
             spaceGrotesk.className,
             "text-white rounded-xl px-5 py-2 m-5 text-xl font-bold hover:opacity-70 transition-all duration-300 disabled:opacity-50"
@@ -136,13 +170,28 @@ const Home: NextPage = () => {
           Buy me a 🥑?
         </button>
 
+        <div className="text-center mt-5">
+          <button onClick={copyToClipboard} className="btn-copy">Copy Result</button>
+          <button onClick={downloadTxtFile} className="btn-download">Download Result</button>
+        </div>
+
+        {messages.map((message, index) => (
+          <div className="message-bubble" key={index}>
+            {message}
+          </div>
+        ))}
+
       </main>
 
       <footer className="flex h-24 w-full items-center justify-center">
-      
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          © {new Date().getFullYear()} {client.appName}. All rights reserved.
+        </p>
       </footer>
     </div>
   );
 };
 
 export default Home;
+
+  
