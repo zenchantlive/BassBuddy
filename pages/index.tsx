@@ -53,7 +53,6 @@ const Home: NextPage = () => {
   }, [result]);
 
   const start = useCallback(async () => {
-    setResult("");
     setReceiving(true);
 
     const response = await fetch("/api/request", {
@@ -73,6 +72,7 @@ const Home: NextPage = () => {
 
     const data = await response.text();
     setResult(data);
+    setMessages((prev) => [...prev, {sender: 'assistant', text: data}]);
     setReceiving(false);
   }, [input]);
 
