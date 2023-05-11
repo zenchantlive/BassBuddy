@@ -3,12 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<body>
-    <div class="header">
-        <img src="https://bassbuddy.weebly.com/uploads/1/4/5/6/145688951/zenchant-create-a-no-word-modern-sleek-logo-for-an-electronic-m-2625a1c7-1a91-49f8-8de5-7e661e5a68a9_orig.png" alt="Abletoner logo">
-        <h1>ABLETONER</h1>
-        <p>THIS IS ABLETONER, THE BEST SOURCE FOR ALL KNOWLEDGE OF ABLETON!</p>
-    </div>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -84,8 +78,16 @@
         }
         .header p {
             opacity: 0.7;
-      
+        
         }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
         #copyButton {
             position: absolute;
             right: 5px;
@@ -135,6 +137,12 @@
     </style>
 </head>
 <body>
+    <div class="header">
+        <img src="https://bassbuddy.weebly.com/uploads/1/4/5/6/145688951/zenchant-create-a-no-word-modern-sleek-logo-for-an-electronic-m-2625a1c7-1a91-49f8-8de5-7e661e5a68a9_orig.png" alt="Abletoner logo">
+        <h1>ABLETONER</h1>
+        <p>THIS IS ABLETONER, THE BEST SOURCE FOR ALL KNOWLEDGE OF ABLETON!</p>
+    </div>
+   
     <form id="myForm">
         <input type="text" id="textInput" placeholder="Ask Any Ableton Question!" required>
         <input type="submit" value="Submit">
