@@ -136,7 +136,7 @@ const Home: NextPage = () => {
         </div>
 
         <BackgroundGradient className="top-0 left-0 h-96 w-48 bg-indigo-500/30 duration-500 dark:bg-blue-500/40" />
-
+      </div>
     </>
   );
 };
