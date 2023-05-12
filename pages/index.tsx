@@ -143,27 +143,25 @@ const Home: NextPage = () => {
         ) : undefined}
       </main>
 
-      <div className="fixed bottom-100 text-center w-full px-4">
-        <div className="p-2 rounded bg-black bg-opacity-50 text-white text-sm">
-          If you find yourself learning, consider supporting me or checking out my art!
-        </div>
-        <button
-          className={classNames(
-            spaceGrotesk.className,
-            "text-white rounded-xl px-5 py-2 m-5 text-xl font-bold hover:opacity-70 transition-all duration-300"
-          )}
-          style={{ background: client.appThemeColor }}
-          onClick={() => window.open('https://www.buymeacoffee.com/zenchant', '_blank')}
-        >
-          Buy me a 🥑?
-        </button>
+      <button
+        className={classNames(
+          spaceGrotesk.className,
+          "fixed bottom-100 right-0 mb-5 mr-5 text-white rounded-xl px-5 py-2 text-xl font-bold hover:opacity-70 transition-all duration-300"
+        )}
+        style={{ background: client.appThemeColor }}
+        onClick={() => window.open('https://www.buymeacoffee.com/zenchant', '_blank')}
+      >
+        Buy me a 🥑?
+      </button>
+
+      <div className="fixed bottom-130 right-0 mb-5 mr-5 text-xs bg-black bg-opacity-50 text-white p-2 rounded">
+        🥑  🥑  If you find yourself learning, consider supporting me or checking out my art! 🥑  🥑
       </div>
 
       <footer className="flex h-24 w-full items-center justify-center">
-      
+
       </footer>
-    </div>
-  </>
+    </>
   );
 };
 
