@@ -66,11 +66,11 @@ const Home: NextPage = () => {
   };
 
   return (
-     <>
-       <div className="relative flex min-h-screen overflow-hidden isolate flex-col items-center justify-start py-2 bg-gray-100 text-black dark:bg-neutral-900 dark:text-gray-100">
-         <Head>
-           <title>{client.appName}</title>
-           <link rel="icon" href={client.appLogo} />
+    <>
+      <div className="relative flex min-h-screen overflow-hidden isolate flex-col items-center justify-start py-2 bg-gray-100 text-black dark:bg-neutral-900 dark:text-gray-100">
+        <Head>
+          <title>{client.appName}</title>
+          <link rel="icon" href={client.appLogo} />
         </Head>
       <BackgroundGradient className="top-0 left-0 h-96 w-48 bg-indigo-500/30 duration-500 dark:bg-blue-500/40" />
       <BackgroundGradient className="left-60 top-96 h-64 w-72 rounded-lg bg-blue-500/30  duration-700 dark:bg-indigo-500/40" />
@@ -163,6 +163,7 @@ const Home: NextPage = () => {
       
       </footer>
     </div>
+  </>
   );
 };
 
