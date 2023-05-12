@@ -1,9 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-<style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap');
-</style>
 .font-space-grotesk {
   font-family: 'Space Grotesk', sans-serif;
 }
