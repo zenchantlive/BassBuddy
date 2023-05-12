@@ -112,9 +112,8 @@ const Home: NextPage = () => {
           />
         </Card>
 
-  return (
-    ft-0 h-96 w-48 bg-indigo
-<>
+ return (
+    <>
       <div className="relative flex min-h-screen overflow-hidden isolate flex-col items-center justify-start py-2 bg-gray-100 text-black dark:bg-neutral-900 dark:text-gray-100">
         <Head>
           <title>{client.appName}</title>
@@ -137,7 +136,7 @@ const Home: NextPage = () => {
         </div>
 
         <BackgroundGradient className="top-0 left-0 h-96 w-48 bg-indigo-500/30 duration-500 dark:bg-blue-500/40" />
-      <footer className="flex h-24 w-full items-center justify-center">
+
 
       </footer>
     </>
