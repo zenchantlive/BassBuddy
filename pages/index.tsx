@@ -5,7 +5,7 @@ import client from "../config-client";
 import BackgroundGradient from "../components/background-gradient";
 import Card from "../components/card";
 import classNames from "classnames";
-const spaceGrotesk = Space_Grotesk({
+const spaceGrotesk = SpaceGrotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
 });
