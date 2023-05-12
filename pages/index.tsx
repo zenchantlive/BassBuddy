@@ -5,7 +5,10 @@ import client from "../config-client";
 import BackgroundGradient from "../components/background-gradient";
 import Card from "../components/card";
 import classNames from "classnames";
-
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+});
 const Home: NextPage = () => {
   const [input, setInput] = useState("");
   const [result, setResult] = useState<string | undefined>(undefined);
