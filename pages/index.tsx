@@ -88,11 +88,12 @@ const Home: NextPage = () => {
           )}
         >
           <span
-            className="text-blue-600"
-            style={{
-              color: client.appThemeColor,
-           
-          >
+          className="text-blue-600"
+          style={{
+            color: typeof client.appThemeColor === 'string' ? client.appThemeColor : 'defaultColor',
+          }}
+        >
+
             {client.appName}
           </span>
         </h1>
