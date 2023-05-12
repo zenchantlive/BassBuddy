@@ -112,52 +112,31 @@ const Home: NextPage = () => {
           />
         </Card>
 
+  return (
+    ft-0 h-96 w-48 bg-indigo
+<>
+      <div className="relative flex min-h-screen overflow-hidden isolate flex-col items-center justify-start py-2 bg-gray-100 text-black dark:bg-neutral-900 dark:text-gray-100">
+        <Head>
+          <title>{client.appName}</title>
+          <link rel="icon" href={client.appLogo} />
+        </Head>
+
         <button
           className={classNames(
             spaceGrotesk.className,
-            "text-white rounded-xl px-5 py-2 m-5 text-xl font-bold hover:opacity-70 transition-all duration-300 disabled:opacity-50"
+            "mt-5 mr-5 text-white rounded-xl px-5 py-2 text-xl font-bold hover:opacity-70 transition-all duration-300"
           )}
           style={{ background: client.appThemeColor }}
-          disabled={receiving}
-          onClick={start}
+          onClick={() => window.open('https://www.buymeacoffee.com/zenchant', '_blank')}
         >
-          Start
+          Buy me a 🥑?
         </button>
 
-        {result !== undefined ? (
-          <Card
-            className="overflow-hidden break-words text-start w-full max-w-lg bg-blue-100/20"
-            style={{
-              minHeight: "9rem",
-            }}
-          >
-            <pre ref={resultRef} className="p-4 whitespace-pre-wrap">{result}</pre>
-            <button
-              className="text-white rounded-xl px-2 py-1 m-2 text-sm font-bold hover:opacity-70 transition-all duration-300"
-              style={{ background: client.appThemeColor }}
-              onClick={copyToClipboard}
-            >
-              Copy to Clipboard
-            </button>
-          </Card>
-        ) : undefined}
-      </main>
+        <div className="mt-5 mr-5 text-xs bg-black bg-opacity-50 text-white p-2 rounded">
+          🥑  🥑  If you find yourself learning, consider supporting me or checking out my art! 🥑  🥑
+        </div>
 
-      <button
-        className={classNames(
-          spaceGrotesk.className,
-          "fixed bottom-100 right-0 mb-5 mr-5 text-white rounded-xl px-5 py-2 text-xl font-bold hover:opacity-70 transition-all duration-300"
-        )}
-        style={{ background: client.appThemeColor }}
-        onClick={() => window.open('https://www.buymeacoffee.com/zenchant', '_blank')}
-      >
-        Buy me a 🥑?
-      </button>
-
-      <div className="fixed bottom-130 right-0 mb-5 mr-5 text-xs bg-black bg-opacity-50 text-white p-2 rounded">
-        🥑  🥑  If you find yourself learning, consider supporting me or checking out my art! 🥑  🥑
-      </div>
-
+        <BackgroundGradient className="top-0 left-0 h-96 w-48 bg-indigo-500/30 duration-500 dark:bg-blue-500/40" />
       <footer className="flex h-24 w-full items-center justify-center">
 
       </footer>
