@@ -30,71 +30,59 @@ const MessageBubble: React.FC<{message: {sender: string, text: string}, isUser: 
     </div>
   )
 }
-// Home Component
 const Home: NextPage = () => {
-  const [input, setInput] = useState("");
-  const [result, setResult] = useState<string | undefined>(undefined);
   const [receiving, setReceiving] = useState(false);
+  const [result, setResult] = useState<string>();
   const [messages, setMessages] = useState<Array<{sender: string, text: string}>>([]);
 
   const downloadTxtFile = () => {
-    const file = new Blob([messages.map(message => message.text).join('\n')], { type: 'text/plain' });
-    download(file, 'results.txt', 'text/plain');
-  };
+    const element = document.createElement("a");
+    const file = new Blob([JSON.stringify(result)], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = "results.txt";
+    document.body.appendChild(element);
+    element.click();
+  }
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(messages.map(message => message.text).join('\n'));
+    navigator.clipboard.writeText(result || '');
+  }
+
+  const handleButtonClick = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setReceiving(true);
+    try {
+      // Call your function here
+      const response = await fetch('/api/start', {
+        method: 'POST',
+      });
+      const data = await response.json();
+      setResult(data.message);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setReceiving(false);
+    }
   };
 
   useEffect(() => {
-    if (result) {
-      setMessages((prev) => [...prev, {sender: 'assistant', text: result}]);
-    }
-  }, [result]);
-
-  const start = useCallback(async () => {
-    setReceiving(true);
-
-    const response = await fetch("/api/request", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        input: input ? input : client.exampleInput,
-      }),
-    });
-
-    if (!response.ok) {
-      setReceiving(false);
-      return;
-    }
-
-    const data = await response.text();
-    setResult(data);
-    setMessages((prev) => [...prev, {sender: 'assistant', text: data}]);
-    setReceiving(false);
-  }, [input]);
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInput(event.currentTarget.value);
-  };
-
-  const handleButtonClick = () => {
-    start();
-    setMessages((prev) => [...prev, {sender: 'user', text: input}]);
-  };
-
+    // Mock messages
+    const mockMessages = [
+      {sender: 'User', text: 'Hi'},
+      {sender: 'Bot', text: 'Hello'},
+    ];
+    setMessages(mockMessages);
+  }, []);
   return (
     <div className="relative flex min-h-screen overflow-hidden isolate flex-col items-center justify-start py-2 bg-gray-100 text-black dark:bg-neutral-900 dark:text-gray-100">
       <Head>
         <title>{client.appName}</title>
         <link rel="icon" href={client.appLogo} />
       </Head>
+
       <BackgroundGradient className="top-0 left-0 h-96 w-48 bg-indigo-500/30 duration-500 dark:bg-blue-500/40" />
-      <BackgroundGradient className="left-60 top-96 h-64" />
-      <BackgroundGradient className="right-96 bottom-60 h-60 w-60 rounded-lg bg-red-500/30 dark:bg-violet-500/30" />
-      <BackgroundGradient className="right-0 bottom-0 h-48 w-96 rounded-full bg-orange-500/30 dark:bg-cyan-500/30" />
+      <BackgroundGradient className="left-60 top-96 h-64 w-64 rounded-lg bg-red-500/30 dark:bg-violet-500/30" />
+      <BackgroundGradient className="right-96 bottom-60 h-60 w-60 rounded-full bg-orange-500/30 dark:bg-cyan-500/30" />
 
       <main className="flex w-full flex-1 flex-col items-center p-5 text-center">
         {client.appLogo ? (
@@ -122,7 +110,7 @@ const Home: NextPage = () => {
             <MessageBubble key={index} message={message} isUser={index % 2 === 0} />
   ))
 }
-          
+
         <button
           className={classNames(
             spaceGrotesk.className,
