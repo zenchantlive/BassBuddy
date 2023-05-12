@@ -110,6 +110,30 @@ const Home: NextPage = () => {
               }}
             />
           </Card>
+           
+        <button
+          className={classNames(
+            spaceGrotesk.className,
+            "text-white rounded-xl px-5 py-2 m-5 text-xl font-bold hover:opacity-70 transition-all duration-300 disabled:opacity-50"
+          )}
+          style={{ background: client.appThemeColor }}
+          disabled={receiving}
+          onClick={start}
+        >
+          Start
+        </button>
+
+        {result !== undefined ? (
+          <Card
+            className="overflow-hidden break-words text-start w-full max-w-lg bg-blue-100/20"
+            style={{
+              minHeight: "9rem",
+            }}
+          >
+            <pre className="p-4 whitespace-pre-wrap">{result}</pre>
+          </Card>
+        ) : undefined}
+            
         </main>
 
         <button
