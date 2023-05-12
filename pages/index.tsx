@@ -1,15 +1,23 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useCallback, useState } from "react";
-import client from "../config-client";
+import Image from "next/image";
+import { Preahvihear, Space_Grotesk } from "next/font/google";
+import classNames from "classnames";
 import BackgroundGradient from "../components/background-gradient";
 import Card from "../components/card";
-import classNames from "classnames";
+import { MouseEvent, useCallback, useRef, useState } from "react";
+import client from "../config-client";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+});
 
 const Home: NextPage = () => {
   const [input, setInput] = useState("");
   const [result, setResult] = useState<string | undefined>(undefined);
   const [receiving, setReceiving] = useState(false);
+  const resultRef = useRef(null);
 
   const start = useCallback(async () => {
     setResult("");
@@ -30,24 +38,31 @@ const Home: NextPage = () => {
       return;
     }
 
-    const data = await response.json();
-    setResult(data);
+    const data = response.body;
+
+    if (!data) {
+      return;
+    }
+
+    const reader = data.getReader();
+    const decoder = new TextDecoder();
+
+    let done = false;
+
+    while (!done) {
+      const { value, done: doneReading } = await reader.read();
+      done = doneReading;
+      const chunkValue = decoder.decode(value);
+      setResult((prev) => prev + chunkValue);
+    }
+
     setReceiving(false);
   }, [input]);
-  // Copy to clipboard function
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(result || '');
-    alert('Results copied to clipboard');
-  };
 
-  // Download results function
-  const downloadTxtFile = () => {
-    const element = document.createElement('a');
-    const file = new Blob([result || ''], {type: 'text/plain'});
-    element.href = URL.createObjectURL(file);
-    element.download = 'Results.txt';
-    document.body.appendChild(element);
-    element.click();
+  const copyToClipboard = () => {
+    if (result) {
+      navigator.clipboard.writeText(result);
+    }
   };
 
   return (
@@ -60,6 +75,7 @@ const Home: NextPage = () => {
       <BackgroundGradient className="left-60 top-96 h-64 w-72 rounded-lg bg-blue-500/30  duration-700 dark:bg-indigo-500/40" />
       <BackgroundGradient className="right-96 bottom-60 h-60 w-60 rounded-lg bg-red-500/30 dark:bg-violet-500/30" />
       <BackgroundGradient className="right-0 bottom-0 h-48 w-96 rounded-full bg-orange-500/30 dark:bg-cyan-500/30" />
+
       <main className="flex w-full flex-1 flex-col items-center p-5 text-center">
         {client.appLogo ? (
           <img className="w-20 mt-20 h-20 rounded-2xl" src={client.appLogo} />
@@ -74,7 +90,7 @@ const Home: NextPage = () => {
             className="text-blue-600"
             style={{
               color: client.appThemeColor,
-            }}
+           
           >
             {client.appName}
           </span>
@@ -93,8 +109,10 @@ const Home: NextPage = () => {
             }}
           />
         </Card>
+
         <button
           className={classNames(
+            spaceGrotesk.className,
             "text-white rounded-xl px-5 py-2 m-5 text-xl font-bold hover:opacity-70 transition-all duration-300 disabled:opacity-50"
           )}
           style={{ background: client.appThemeColor }}
@@ -111,13 +129,36 @@ const Home: NextPage = () => {
               minHeight: "9rem",
             }}
           >
-            <pre className="p-4 whitespace-pre-wrap">{result}</pre>
+            <pre ref={resultRef} className="p-4 whitespace-pre-wrap">{result}</pre>
+            <button
+              className="text-white rounded-xl px-2 py-1 m-2 text-sm font-bold hover:opacity-70 transition-all duration-300"
+              style={{ background: client.appThemeColor }}
+              onClick={copyToClipboard}
+            >
+              Copy to Clipboard
+            </button>
           </Card>
         ) : undefined}
       </main>
 
+      <div className="fixed bottom-100 text-center w-full px-4">
+        <div className="p-2 rounded bg-black bg-opacity-50 text-white text-sm">
+          If you find yourself learning, consider supporting me or checking out my art!
+        </div>
+        <button
+          className={classNames(
+            spaceGrotesk.className,
+            "text-white rounded-xl px-5 py-2 m-5 text-xl font-bold hover:opacity-70 transition-all duration-300"
+          )}
+          style={{ background: client.appThemeColor }}
+          onClick={() => window.open('https://www.buymeacoffee.com/zenchant', '_blank')}
+        >
+          Buy me a 🥑?
+        </button>
+      </div>
+
       <footer className="flex h-24 w-full items-center justify-center">
-        {/* Your footer content here */}
+      
       </footer>
     </div>
   );
