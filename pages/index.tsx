@@ -80,66 +80,52 @@ const Home: NextPage = () => {
       <main className="flex w-full flex-1 flex-col items-center p-5 text-center">
         {client.appLogo ? (
           <img className="w-20 mt-20 h-20 rounded-2xl" src={client.appLogo} />
-        ) : undefined}
-        <h1
+           ) : undefined}
+          <h1
+            className={classNames(
+              "text-3xl sm:text-6xl font-bold",
+              client.appLogo ? "mt-10" : "mt-48"
+            )}
+          >
+            <span
+              className="text-blue-600"
+              style={{
+                color: typeof client.appThemeColor === 'string' ? client.appThemeColor : 'defaultColor',
+              }}
+            >
+              {client.appName}
+            </span>
+          </h1>
+
+          <p className="mt-3 max-w-lg opacity-70">{client.appSummary}</p>
+
+          <Card className="p-0 overflow-hidden mt-10 w-full h-36 max-w-lg bg-blue-100/20">
+            <textarea
+              className="bg-transparent w-full h-full outline-none p-4 resize-none"
+              placeholder={client.exampleInput}
+              autoFocus
+              value={input}
+              onChange={(event) => {
+                setInput(event.currentTarget.value);
+              }}
+            />
+          </Card>
+        </main>
+
+        <button
           className={classNames(
-            "text-3xl sm:text-6xl font-bold",
-            client.appLogo ? "mt-10" : "mt-48"
+            spaceGrotesk.className,
+            "mt-5 mr-5 text-white rounded-xl px-5 py-2 text-xl font-bold hover:opacity-70 transition-all duration-300"
           )}
+          style={{ background: client.appThemeColor }}
+          onClick={() => window.open('https://www.buymeacoffee.com/zenchant', '_blank')}
         >
-          <span
-          className="text-blue-600"
-          style={{
-            color: typeof client.appThemeColor === 'string' ? client.appThemeColor : 'defaultColor',
-          }}
-        >
+          Buy me a 🥑?
+        </button>
 
-            {client.appName}
-          </span>
-        </h1>
-
-        <p className="mt-3 max-w-lg opacity-70">{client.appSummary}</p>
-
-        <Card className="p-0 overflow-hidden mt-10 w-full h-36 max-w-lg bg-blue-100/20">
-          <textarea
-            className="bg-transparent w-full h-full outline-none p-4 resize-none"
-            placeholder={client.exampleInput}
-            autoFocus
-            value={input}
-            onChange={(event) => {
-              setInput(event.currentTarget.value);
-            }}
-          />
-        </Card>
-
- return (
-    <BackgroundGradient className="top-0 left-0 h-96
-
-nClick={() =>
-<>
-    <div className="relative flex min-h-screen overflow-hidden isolate flex-col items-center justify-start py-2 bg-gray-100 text-black dark:bg-neutral-900 dark:text-gray-100">
-      <Head>
-        <title>{client.appName}</title>
-        <link rel="icon" href={client.appLogo} />
-      </Head>
-
-      <button
-        className={classNames(
-          spaceGrotesk.className,
-          "mt-5 mr-5 text-white rounded-xl px-5 py-2 text-xl font-bold hover:opacity-70 transition-all duration-300"
-        )}
-        style={{ background: client.appThemeColor }}
-        onClick={() => window.open('https://www.buymeacoffee.com/zenchant', '_blank')}
-      >
-        Buy me a 🥑?
-      </button>
-
-      <div className="mt-5 mr-5 text-xs bg-black bg-opacity-50 text-white p-2 rounded">
-        🥑  🥑  If you find yourself learning, consider supporting me or checking out my art! 🥑  🥑
-      </div>
-
-      <BackgroundGradient className="top-0 left-0 h-96 w-48 bg-indigo-500/30 duration-500 dark:bg-blue-500/40" />
-
+        <div className="mt-5 mr-5 text-xs bg-black bg-opacity-50 text-white p-2 rounded">
+          🥑  🥑  If you find yourself learning, consider supporting me or checking out my art! 🥑  🥑
+        </div>
       </div>
     </>
   );
