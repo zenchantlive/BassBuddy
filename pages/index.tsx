@@ -113,29 +113,33 @@ const Home: NextPage = () => {
         </Card>
 
  return (
-    <>
-      <div className="relative flex min-h-screen overflow-hidden isolate flex-col items-center justify-start py-2 bg-gray-100 text-black dark:bg-neutral-900 dark:text-gray-100">
-        <Head>
-          <title>{client.appName}</title>
-          <link rel="icon" href={client.appLogo} />
-        </Head>
+    <BackgroundGradient className="top-0 left-0 h-96
 
-        <button
-          className={classNames(
-            spaceGrotesk.className,
-            "mt-5 mr-5 text-white rounded-xl px-5 py-2 text-xl font-bold hover:opacity-70 transition-all duration-300"
-          )}
-          style={{ background: client.appThemeColor }}
-          onClick={() => window.open('https://www.buymeacoffee.com/zenchant', '_blank')}
-        >
-          Buy me a 🥑?
-        </button>
+nClick={() =>
+<>
+    <div className="relative flex min-h-screen overflow-hidden isolate flex-col items-center justify-start py-2 bg-gray-100 text-black dark:bg-neutral-900 dark:text-gray-100">
+      <Head>
+        <title>{client.appName}</title>
+        <link rel="icon" href={client.appLogo} />
+      </Head>
 
-        <div className="mt-5 mr-5 text-xs bg-black bg-opacity-50 text-white p-2 rounded">
-          🥑  🥑  If you find yourself learning, consider supporting me or checking out my art! 🥑  🥑
-        </div>
+      <button
+        className={classNames(
+          spaceGrotesk.className,
+          "mt-5 mr-5 text-white rounded-xl px-5 py-2 text-xl font-bold hover:opacity-70 transition-all duration-300"
+        )}
+        style={{ background: client.appThemeColor }}
+        onClick={() => window.open('https://www.buymeacoffee.com/zenchant', '_blank')}
+      >
+        Buy me a 🥑?
+      </button>
 
-        <BackgroundGradient className="top-0 left-0 h-96 w-48 bg-indigo-500/30 duration-500 dark:bg-blue-500/40" />
+      <div className="mt-5 mr-5 text-xs bg-black bg-opacity-50 text-white p-2 rounded">
+        🥑  🥑  If you find yourself learning, consider supporting me or checking out my art! 🥑  🥑
+      </div>
+
+      <BackgroundGradient className="top-0 left-0 h-96 w-48 bg-indigo-500/30 duration-500 dark:bg-blue-500/40" />
+
       </div>
     </>
   );
