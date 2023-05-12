@@ -81,8 +81,10 @@ const Home: NextPage = () => {
       </Head>
 
       <BackgroundGradient className="top-0 left-0 h-96 w-48 bg-indigo-500/30 duration-500 dark:bg-blue-500/40" />
-      <BackgroundGradient className="left-60 top-96 h-64 w-64 rounded-lg bg-red-500/30 dark:bg-violet-500/30" />
-      <BackgroundGradient className="right-96 bottom-60 h-60 w-60 rounded-full bg-orange-500/30 dark:bg-cyan-500/30" />
+      <BackgroundGradient className="left-60 top-96 h-64 w-72 rounded-lg bg-blue-500/30  duration-700 dark:bg-indigo-500/40" />
+      <BackgroundGradient className="right-96 bottom-60 h-60 w-60 rounded-lg bg-red-500/30 dark:bg-violet-500/30" />
+      <BackgroundGradient className="right-0 bottom-0 h-48 w-96 rounded-full bg-orange-500/30 dark:bg-cyan-500/30" />
+      
       <main className="flex w-full flex-1 flex-col items-center p-5 text-center">
         {client.appLogo ? (
           <img className="w-20 mt-20 h-20 rounded-2xl" src={client.appLogo} />
