@@ -7,6 +7,7 @@ import BackgroundGradient from "../components/background-gradient";
 import Card from "../components/card";
 import { MouseEvent, useCallback, useRef, useState } from "react";
 import client from "../config-client";
+import "./styles.css"; // import the CSS file here
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -79,7 +80,7 @@ const Home: NextPage = () => {
 
       <main className="flex w-full flex-1 flex-col items-center p-5 text-center">
         {client.appLogo ? (
-          <img className="w-20 mt-20 h-20 rounded-2xl" src={client.appLogo} />
+          <img className="w-20 mt-20 h-20 rounded-2xl" src={client.appLogo} alt="Logo" />
            ) : undefined}
           <h1
             className={classNames(
@@ -89,9 +90,7 @@ const Home: NextPage = () => {
           >
             <span
               className="text-blue-600"
-              style={{
-                color: typeof client.appThemeColor === 'string' ? client.appThemeColor : 'defaultColor',
-              }}
+
             >
               {client.appName}
             </span>
@@ -111,12 +110,12 @@ const Home: NextPage = () => {
             />
           </Card>
            
-        <button
-          className={classNames(
+          <button
+           className={classNames(
             spaceGrotesk.className,
-            "text-white rounded-xl px-5 py-2 m-5 text-xl font-bold hover:opacity-70 transition-all duration-300 disabled:opacity-50"
+            "custom-button",
+            "disabled:opacity-50"
           )}
-          style={{ background: client.appThemeColor }}
           disabled={receiving}
           onClick={start}
         >
@@ -138,10 +137,9 @@ const Home: NextPage = () => {
 
         <button
           className={classNames(
-            spaceGrotesk.className,
-            "mt-5 mr-5 text-white rounded-xl px-5 py-2 text-xl font-bold hover:opacity-70 transition-all duration-300"
+            "custom-button",
+            "disabled:opacity-50"
           )}
-          style={{ background: client.appThemeColor }}
           onClick={() => window.open('https://www.buymeacoffee.com/zenchant', '_blank')}
         >
           Buy me a 🥑?
