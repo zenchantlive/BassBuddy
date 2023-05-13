@@ -1,3 +1,4 @@
+// pages/index.tsx
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -8,6 +9,8 @@ import Card from "../components/card";
 import { MouseEvent, useCallback, useRef, useState } from "react";
 import client from "../config-client";
 import "./styles.css"; // import the CSS file here
+import React from 'react';
+import withAuth from '../components/withAuth';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -68,89 +71,9 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <div className="relative flex min-h-screen overflow-hidden isolate flex-col items-center justify-start py-2 bg-gray-100 text-black dark:bg-neutral-900 dark:text-gray-100">
-        <Head>
-          <title>{client.appName}</title>
-          <link rel="icon" href={client.appLogo} />
-        </Head>
-      <BackgroundGradient className="top-0 left-0 h-96 w-48 bg-indigo-500/30 duration-500 dark:bg-blue-500/40" />
-      <BackgroundGradient className="left-60 top-96 h-64 w-72 rounded-lg bg-blue-500/30  duration-700 dark:bg-indigo-500/40" />
-      <BackgroundGradient className="right-96 bottom-60 h-60 w-60 rounded-lg bg-red-500/30 dark:bg-violet-500/30" />
-      <BackgroundGradient className="right-0 bottom-0 h-48 w-96 rounded-full bg-orange-500/30 dark:bg-cyan-500/30" />
-
-      <main className="flex w-full flex-1 flex-col items-center p-5 text-center">
-        {client.appLogo ? (
-          <img className="w-20 mt-20 h-20 rounded-2xl" src={client.appLogo} alt="Logo" />
-           ) : undefined}
-          <h1
-            className={classNames(
-              "text-3xl sm:text-6xl font-bold",
-              client.appLogo ? "mt-10" : "mt-48"
-            )}
-          >
-            <span
-              className="text-blue-600"
-
-            >
-              {client.appName}
-            </span>
-          </h1>
-
-          <p className="mt-3 max-w-lg opacity-70">{client.appSummary}</p>
-
-          <Card className="p-0 overflow-hidden mt-10 w-full h-36 max-w-lg bg-blue-100/20">
-            <textarea
-              className="bg-transparent w-full h-full outline-none p-4 resize-none"
-              placeholder={client.exampleInput}
-              autoFocus
-              value={input}
-              onChange={(event) => {
-                setInput(event.currentTarget.value);
-              }}
-            />
-          </Card>
-           
-          <button
-           className={classNames(
-            spaceGrotesk.className,
-            "custom-button",
-            "disabled:opacity-50"
-          )}
-          disabled={receiving}
-          onClick={start}
-        >
-          Start
-        </button>
-
-        {result !== undefined ? (
-          <Card
-            className="overflow-hidden break-words text-start w-full max-w-lg bg-blue-100/20"
-            style={{
-              minHeight: "9rem",
-            }}
-          >
-            <pre className="p-4 whitespace-pre-wrap">{result}</pre>
-          </Card>
-        ) : undefined}
-            
-        </main>
-
-        <button
-          className={classNames(
-            "custom-button",
-            "disabled:opacity-50"
-          )}
-          onClick={() => window.open('https://www.buymeacoffee.com/zenchant', '_blank')}
-        >
-          Buy me a 🥑?
-        </button>
-
-        <div className="mt-5 mr-5 text-xs bg-black bg-opacity-50 text-white p-2 rounded">
-          🥑  🥑  If you find yourself learning, consider supporting me or checking out my art! 🥑  🥑
-        </div>
-      </div>
+      {/* Your code... */}
     </>
   );
 };
 
-export default Home;
+export default withAuth(Home);
