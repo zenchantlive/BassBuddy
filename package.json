@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "classnames": "^2.3.2",
+    "@prisma/client": "^2.20.1",
     "eventsource-parser": "^0.1.0",
     "next": "latest",
     "react": "18.2.0",
@@ -14,6 +15,7 @@
   },
   "devDependencies": {
     "@types/node": "18.11.3",
+    "@prisma/cli": "^2.20.1",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
     "downloadjs": "^1.4.7",
