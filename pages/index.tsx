@@ -8,7 +8,7 @@ import BackgroundGradient from "../components/background-gradient";
 import Card from "../components/card";
 import { MouseEvent, useCallback, useRef, useState } from "react";
 import client from "../config-client";
-import "./styles.css"; // import the CSS file here
+import "../styles/styles.css"; // import the CSS file here
 import React from 'react';
 import withAuth from '../components/withAuth';
 
