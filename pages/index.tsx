@@ -6,8 +6,7 @@ import classNames from "classnames";
 import BackgroundGradient from "../components/background-gradient";
 import Card from "../components/card";
 import { MouseEvent, useCallback, useRef, useState } from "react";
-import client from "../config-client";
-import "../styles/global.css"; // import the CSS file here
+import client from "../config-client"; // import the CSS file here
 import React from 'react';
 import ProtectedRoute from '../components/ProtectedRoute';
 
