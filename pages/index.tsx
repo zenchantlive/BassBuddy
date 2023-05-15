@@ -1,4 +1,3 @@
-// pages/index.tsx
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -8,16 +7,17 @@ import BackgroundGradient from "../components/background-gradient";
 import Card from "../components/card";
 import { MouseEvent, useCallback, useRef, useState } from "react";
 import client from "../config-client";
-import "../styles/styles.css"; // import the CSS file here
+import "../styles/global.css"; // import the CSS file here
 import React from 'react';
-import withAuth from '../components/withAuth';
+import ProtectedRoute from '../components/ProtectedRoute';
+
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
 });
 
-const Home: NextPage = () => {
+const HomeContent: NextPage = () => {
   const [input, setInput] = useState("");
   const [result, setResult] = useState<string | undefined>(undefined);
   const [receiving, setReceiving] = useState(false);
@@ -42,23 +42,13 @@ const Home: NextPage = () => {
       return;
     }
 
-    const data = response.body;
+    const data = await response.text();
 
     if (!data) {
       return;
     }
 
-    const reader = data.getReader();
-    const decoder = new TextDecoder();
-
-    let done = false;
-
-    while (!done) {
-      const { value, done: doneReading } = await reader.read();
-      done = doneReading;
-      const chunkValue = decoder.decode(value);
-      setResult((prev) => prev + chunkValue);
-    }
+    setResult(data);
 
     setReceiving(false);
   }, [input]);
@@ -71,9 +61,24 @@ const Home: NextPage = () => {
 
   return (
     <>
-      {/* Your code... */}
+      <Head>
+        <title>BassBuddy</title>
+      </Head>
+      <main>
+        <h1>BassBuddy</h1>
+        <label htmlFor="input">Input:</label>
+        <input id="input" value={input} onChange={(e) => setInput(e.target.value)} />
+        <button onClick={start}>Start</button>
+        <p>{result}</p>
+        <button onClick={copyToClipboard}>Copy to clipboard</button>
+      </main>
     </>
   );
 };
 
-export default withAuth(Home);
+const Home: NextPage = () => (
+    <ProtectedRoute component={HomeContent} />
+);
+  
+
+export default (Home);

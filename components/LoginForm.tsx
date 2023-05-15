@@ -1,27 +1,31 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
+import { useRouter } from 'next/router'; // Add this line
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const { token, setToken, authError, setAuthError } = useAuth(); // Add this line
+  const router = useRouter(); // Add this line
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const backendUrl = 
+      process.env.REACT_APP_BACKEND_URL_LIVE || process.env.REACT_APP_BACKEND_URL;
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/login`, {
+      const response = await axios.post(`${backendUrl}/api/login`, {
         email,
         password,
       });
 
-      // Save the JWT in local storage
-      localStorage.setItem('token', response.data.token);
+      setToken(response.data.token); // Use setToken from AuthContext
 
       // Redirect the user to the home page (or wherever you want)
-      // Use Next.js's useRouter hook for this
+      router.push('/home'); // Redirect the user to home page
     } catch (err: any) {
-      setError(err?.response?.data?.message || 'An error occurred');
+      setAuthError(err?.response?.data?.message || 'An error occurred'); // Use setAuthError from AuthContext
     }
   };
 
@@ -40,7 +44,7 @@ const LoginForm: React.FC = () => {
         placeholder="Password"
       />
       <button type="submit">Log In</button>
-      {error && <p>{error}</p>}
+      {authError && <p>{authError}</p>} // Use authError from AuthContext
     </form>
   );
 };

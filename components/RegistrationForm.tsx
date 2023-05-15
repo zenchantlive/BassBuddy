@@ -1,24 +1,54 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
+import { useRouter } from 'next/router'; // Add this line
 
-const RegistrationForm = () => {
+const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { token, setToken, authError, setAuthError } = useAuth(); // Add this line
+  const router = useRouter(); // Add this line
 
-  const register = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const res = await axios.post('/register', { email, password });
-    // Save the token to local storage
-    localStorage.setItem('token', res.data.token);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const backendUrl = 
+      process.env.REACT_APP_BACKEND_URL_LIVE || process.env.REACT_APP_BACKEND_URL;
+
+    try {
+      const response = await axios.post(`${backendUrl}/api/register`, {
+        email,
+        password,
+      });
+
+      setToken(response.data.token); // Use setToken from AuthContext
+
+      // Redirect the user to the home page (or wherever you want)
+      router.push('/home'); // Redirect the user to home page
+    } catch (err: any) {
+      setAuthError(err?.response?.data?.message || 'An error occurred'); // Use setAuthError from AuthContext
+    }
   };
 
   return (
-    <form onSubmit={register}>
-      <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="Enter your email address" title="Email address" />
-      <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="Enter your password" title="Password" />
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+      />
       <button type="submit">Register</button>
+      {authError && <p>{authError}</p>} // Use authError from AuthContext
     </form>
   );
 };
 
-export default RegistrationForm;
+export default RegisterForm;
+
