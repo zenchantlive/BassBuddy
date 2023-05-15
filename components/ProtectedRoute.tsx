@@ -1,25 +1,22 @@
-// components/ProtectedRoute.tsx
-import { FC, ComponentType } from 'react';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 
-interface ProtectedRouteProps {
-  component: ComponentType;
-  [props: string]: any;
-}
-
-const ProtectedRoute: FC<ProtectedRouteProps> = ({ component: Component, ...props }) => {
+const ProtectedRoute = ({ component: Component }: { component: any }) => {
   const { token } = useAuth();
   const router = useRouter();
 
+  useEffect(() => {
+    if (!token) {
+      router.push('/login');
+    }
+  }, [token]);
+
   if (!token) {
-    // If there's no token, redirect to the login page
-    router.push('/login');
-    return null;
+    return null; // or a loading spinner, if you prefer
   }
 
-  // If there's a token, render the component
-  return <Component {...props} />;
+  return <Component />;
 };
 
 export default ProtectedRoute;
