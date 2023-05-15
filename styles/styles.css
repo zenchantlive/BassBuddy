@@ -1,4 +1,12 @@
-.custom-button {
+
+
+@media (prefers-color-scheme: dark) {
+    body {
+      background-color: black;
+    }
+  }
+  
+  .custom-button {
     background: var(--app-theme-color);
     color: white;
     border-radius: 0.5rem;

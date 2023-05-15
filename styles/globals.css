@@ -1,10 +1,52 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @media (prefers-color-scheme: dark) {
     body {
       background-color: black;
     }
+  }
+  
+  .custom-button {
+    background: var(--app-theme-color);
+    color: white;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .custom-button:hover {
+    opacity: 0.7;
+  }
+  
+  .custom-button:disabled {
+    opacity: 0.5;
+  }
+  
+  .text-blue-600 {
+    color: blue;
+  }
+  .custom-button {
+    font-family: var(--font-space-grotesk);
+    margin-top: 5px;
+    margin-right: 5px;
+    color: white;
+    border-radius: 20px;
+    padding: 10px 25px;
+    font-size: 24px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .custom-button:hover {
+    opacity: 0.7;
+  }
+  
+  .custom-button:disabled {
+    opacity: 0.5;
+  }
+  
+  .custom-button:active {
+    transform: translateY(2px);
   }
   

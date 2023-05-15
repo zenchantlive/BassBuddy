@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { getToken } from '../helpers/auth'; // Adjust the path according to your file structure
 
 interface WithAuthProps {
   // Define the props that will be passed to the wrapped component
@@ -10,7 +11,7 @@ interface WithAuthProps {
 const withAuth = (WrappedComponent: React.ElementType<WithAuthProps>) => {
   return (props: WithAuthProps) => {
     // check if there is a token in the localStorage
-    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    const token = getToken();
 
     // using the next/router hook
     const router = useRouter();
