@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import { useRouter } from 'next/router'; // Add this line
+import { useRouter } from 'next/router';
 
+const { token, setToken, authError, setAuthError } = useAuth();
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { token, setToken, authError, setAuthError } = useAuth(); // Add this line
-  const router = useRouter(); // Add this line
+  const { setToken, setAuthError } = useAuth();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const backendUrl = 
-      process.env.REACT_APP_BACKEND_URL_LIVE || process.env.REACT_APP_BACKEND_URL;
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     try {
       const response = await axios.post(`${backendUrl}/api/login`, {
@@ -20,12 +20,10 @@ const LoginForm: React.FC = () => {
         password,
       });
 
-      setToken(response.data.token); // Use setToken from AuthContext
-
-      // Redirect the user to the home page (or wherever you want)
-      router.push('/home'); // Redirect the user to home page
+      setToken(response.data.token);
+      router.push('/home');
     } catch (err: any) {
-      setAuthError(err?.response?.data?.message || 'An error occurred'); // Use setAuthError from AuthContext
+      setAuthError(err?.response?.data?.message || 'An error occurred');
     }
   };
 
@@ -44,9 +42,10 @@ const LoginForm: React.FC = () => {
         placeholder="Password"
       />
       <button type="submit">Log In</button>
-      {authError && <p>{authError}</p>} // Use authError from AuthContext
+      {authError && <p>{authError}</p>}
     </form>
   );
 };
 
 export default LoginForm;
+

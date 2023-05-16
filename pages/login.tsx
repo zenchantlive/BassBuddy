@@ -1,4 +1,3 @@
-// pages/login.tsx
 import React from 'react';
 import LoginForm from '../components/LoginForm';
 import Link from 'next/link';
@@ -13,4 +12,3 @@ const Login = () => {
 };
 
 export default Login;
-

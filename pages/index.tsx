@@ -1,20 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
-import { Preahvihear, Space_Grotesk } from "next/font/google";
-import classNames from "classnames";
-import BackgroundGradient from "../components/background-gradient";
-import Card from "../components/card";
 import { MouseEvent, useCallback, useRef, useState } from "react";
-import client from "../config-client"; // import the CSS file here
+import client from "../config-client";
 import React from 'react';
 import ProtectedRoute from '../components/ProtectedRoute';
-
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-});
+import { AuthProvider } from '../context/AuthContext';
 
 const HomeContent: NextPage = () => {
   const [input, setInput] = useState("");
@@ -76,8 +66,10 @@ const HomeContent: NextPage = () => {
 };
 
 const Home: NextPage = () => (
-    <ProtectedRoute component={HomeContent} />
+    <AuthProvider>
+        <ProtectedRoute component={HomeContent} />
+    </AuthProvider>
 );
   
 
-export default (Home);
+export default Home;

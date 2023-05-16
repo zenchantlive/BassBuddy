@@ -2,6 +2,8 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 
+const { token, authError } = useAuth();
+
 const ProtectedRoute = ({ component: Component }: { component: any }) => {
   const { token } = useAuth();
   const router = useRouter();
