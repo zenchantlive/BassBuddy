@@ -1,13 +1,14 @@
+// RegistrationForm.tsx
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/router';
 
-const { token, setToken, authError, setAuthError } = useAuth();
 const RegisterForm: React.FC = () => {
+  const { token, setToken, authError, setAuthError } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { setToken, setAuthError } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,4 +49,3 @@ const RegisterForm: React.FC = () => {
 };
 
 export default RegisterForm;
-

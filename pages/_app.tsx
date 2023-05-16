@@ -1,3 +1,5 @@
+// _app.tsx
+
 import "../styles/global.css";
 import type { AppProps } from "next/app";
 import ComponentType from "next/app";
@@ -12,5 +14,4 @@ function MyApp({ Component, pageProps }: AppProps & { Component: ComponentType }
 }
 
 export default MyApp;
-
 
