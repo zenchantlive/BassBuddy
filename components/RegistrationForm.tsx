@@ -13,7 +13,7 @@ const RegisterForm: React.FC = () => {
     e.preventDefault();
 
     const backendUrl = 
-      process.env.REACT_APP_BACKEND_URL_LIVE || process.env.REACT_APP_BACKEND_URL;
+      process.env.REACT_APP_BACKEND_URL;
 
     try {
       const response = await axios.post(`${backendUrl}/api/register`, {
